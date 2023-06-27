@@ -22,3 +22,36 @@ def catalog():
         file_buf.close()
         print(f'wrote file: {file}')
     
+    # Step 4
+    urls = []
+    with open('urls.txt', 'r') as f:
+        for line in f:
+            url = line.strip()
+            urls.append(url)
+    
+    for url in urls:
+        index = url.rfind('/') + 1
+        filename = url[index:]
+        file = './data/' + filename
+        if not os.path.exists('./data'):
+            os.makedirs('./data')
+        if os.path.exists(file):
+            print(f'{file} already exists')
+            print('--- skipping ---')
+        else:
+            data = pull(url)
+            store(data, file)
+            print(f'pulled: {file}')
+            print('--- waiting ---')
+            time.sleep(15)
+
+# Step 5
+def combine():
+    if not os.path.exists('./data'):
+        os.makedirs('./data')
+    with open('data/combo.txt', 'w+') as outfile:
+        for file in glob.glob('data/*.html'):
+            with open(file) as infile:
+                outfile.write(infile.read())
+
+combine()
