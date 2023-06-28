@@ -1,6 +1,9 @@
 # Ignore the data folder
 data
 
+# Ignore airflow logs
+airflow-docker/logs/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
